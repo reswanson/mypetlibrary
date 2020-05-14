@@ -34,7 +34,6 @@ public class PetLibrary {
 		    displayPets(pets);
 		    break;
 		  case "2":
-		    System.out.println("add");
 		    addPets(pets);
 		    break;
 		  case "3":
@@ -102,33 +101,30 @@ public class PetLibrary {
     public final void addPets(ArrayList<String[]> mypets) {
     	
     	System.out.println("\n\n");
-    	System.out.println("add pet (name age):");
-        Scanner sc = new Scanner(System.in); 
-        
-        // get new pet from user 
-        String mynewpet = sc.nextLine();
-        
-        // chop up mynewpet to get name and age as separate values
-        // split off of space char.
-        // TODO,  add validation logic to make user enter data in correct format.
-        String[] arrayofpetdata = mynewpet.split(" ", 2);
-        
-        
-        final String name=arrayofpetdata[0];
-        final String age=arrayofpetdata[1];
-        // System.out.printf("name: " + name + " age: " + age);
+    	
+    	do { 
+	    	System.out.println("add pet (name age):");
+	        Scanner sc = new Scanner(System.in); 
+	        
+	        // get new pet from user 
+	        String mynewpet = sc.nextLine();
+	        
+	        // chop up mynewpet to get name and age as separate values
+	        // split off of space char.
+	        // TODO,  add validation logic to make user enter data in correct format.
+	        String[] arrayofpetdata = mynewpet.split(" ", 2);
+	                
+	        final String name=arrayofpetdata[0];
+	        
+	        // 'done' is keyword to stop entering pets
+	        if (name.equals("done")) {
+	        	break;
+	        }
 
-    	mypets.add(new String[] {name, age});
-    	// printing list of String arrays in the ArrayList
-    	// from here: https://stackoverflow.com/questions/3642205/java-arraylist-of-arrays
-        //for( int i = 0; i < mypets.size(); i++ ) {
-        //    for( int j = 0; j < mypets.get(i).length; j++ )
-        //        System.out.printf(" $ " + mypets.get(i)[j]);
-        //    System.out.println();
-        //}
+	        final String age=arrayofpetdata[1];
+	    	mypets.add(new String[] {name, age});
+    	} while (true);
        
-    	System.out.println("\n");
-
     }
 
 }
