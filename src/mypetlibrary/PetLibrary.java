@@ -11,6 +11,11 @@ public class PetLibrary {
 	
 	PetLibrary() {
 	boolean exitnow = false;
+	//String[] pets = {};
+	String[] pets = {"Fido", "mangy", "dog", "meowmeow"};
+
+
+	
     
 	do {
 			
@@ -25,10 +30,11 @@ public class PetLibrary {
 		switch (choice) {
 		  case "1":
 		    System.out.println("View");
-		    displayPets();
+		    displayPets(pets);
 		    break;
 		  case "2":
 		    System.out.println("add");
+		    addPets();
 		    break;
 		  case "3":
 		    System.out.println("update");
@@ -65,14 +71,46 @@ public class PetLibrary {
 		System.out.println("Your choice: ");
     }
     
-    public final void displayPets() {
-    	int number = 0;
+    
+    public final void displayPets(String[] mypets) {
+    	int numberofpets = 0;
 		System.out.println("+-------------------------+");
 		System.out.println("| ID | NAME         | AGE |");
 		System.out.println("+-------------------------+");
+		
+		numberofpets=mypets.length;
+		
+    	for (int i = 0; i < numberofpets; i++) {
+      	  System.out.println(mypets[i]);
+      	}
+    	   	
+
 		System.out.println("all my pets");
 		System.out.println("+-------------------------+");
-		System.out.println(number + " rows in set\n");
+		System.out.println(numberofpets + " rows in set\n");
+    }
+    
+    public final void addPets() {
+    	
+    	System.out.println("\n\n");
+    	System.out.println("add pet (name age):");
+        Scanner sc = new Scanner(System.in); 
+        
+        // String input 
+        String mynewpet = sc.nextLine();
+        
+        System.out.println("0808080808080808080");
+        System.out.println(mynewpet);
+        System.out.println("0808080808080808080");
+
+
+    	
+    	//String[] pets = {"Fido", "mangy", "dog", "meowmeow"};
+    	//for (int i = 0; i < pets.length; i++) {
+    	//  System.out.println(pets[i]);
+    //	}
+    	System.out.println("\n\n");
+
     }
 
 }
