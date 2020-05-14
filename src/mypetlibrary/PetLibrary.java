@@ -25,6 +25,7 @@ public class PetLibrary {
 		switch (choice) {
 		  case "1":
 		    System.out.println("View");
+		    displayPets();
 		    break;
 		  case "2":
 		    System.out.println("add");
@@ -62,9 +63,17 @@ public class PetLibrary {
 		System.out.println(" 6) Search pets by age");
 		System.out.println(" 7) Exit program");
 		System.out.println("Your choice: ");
-
     }
-
+    
+    public final void displayPets() {
+    	int number = 0;
+		System.out.println("+-------------------------+");
+		System.out.println("| ID | NAME         | AGE |");
+		System.out.println("+-------------------------+");
+		System.out.println("all my pets");
+		System.out.println("+-------------------------+");
+		System.out.println(number + " rows in set\n");
+    }
 
 }
 
