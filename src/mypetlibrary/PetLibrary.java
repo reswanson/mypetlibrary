@@ -78,16 +78,16 @@ public class PetLibrary {
     	String age = "";
     	String border="+------------------------+";
     	
+    	
+    	
 		System.out.println("\n" + border);
         System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", "ID", "NAME", "AGE");
-
-		//System.out.println("| ID | NAME         | AGE |");
 		System.out.println(border);
 			
 			
 		// TODO 
-		// There is a better way to do this, but this is what I have so far,  
-		// can make it better in a future release.	
+		// There has to be a better way to do this, but this is what I have so far,  
+		// can work on it in future releases.	
 		int numberofpets = mypets.size();
         for( int i = 0; i < numberofpets; i++ ) {
 	        name=mypets.get(i)[0];
@@ -107,6 +107,7 @@ public class PetLibrary {
     	
     	String name="";
     	String age="";
+    	int petsadded=0;
     	
     	do { 
 	    	System.out.println("add pet (name age):");
@@ -142,9 +143,11 @@ public class PetLibrary {
   	
     	    // add new value to arraylist
 	    	mypets.add(new String[] {name, age});
+	    	petsadded++;
 	    	
     	} while (true);
-       
+    		System.out.println(petsadded + " pets added.\n");
+
     }
 
 }
