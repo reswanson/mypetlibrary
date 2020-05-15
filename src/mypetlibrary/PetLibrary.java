@@ -15,8 +15,8 @@ public class PetLibrary {
     
     // TODO 
     // Seeding the list, have to remember to remove before submitting
-	pets.add(new String[] {"kitty", "8"});
-	pets.add(new String[] {"bruno", "7"});
+	//pets.add(new String[] {"kitty", "8"});
+	//pets.add(new String[] {"bruno", "7"});
 
     
 	do {
