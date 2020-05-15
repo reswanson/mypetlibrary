@@ -76,10 +76,13 @@ public class PetLibrary {
     	//int numberofpets = mypets.length;
     	String name = "";
     	String age = "";
+    	String border="+------------------------+";
     	
-		System.out.println("\n+-------------------------+");
-		System.out.println("| ID | NAME         | AGE |");
-		System.out.println("+-------------------------+");
+		System.out.println("\n" + border);
+        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", "ID", "NAME", "AGE");
+
+		//System.out.println("| ID | NAME         | AGE |");
+		System.out.println(border);
 			
 			
 		// TODO 
@@ -89,10 +92,10 @@ public class PetLibrary {
         for( int i = 0; i < numberofpets; i++ ) {
 	        name=mypets.get(i)[0];
 	        age=mypets.get(i)[1];
-	        System.out.printf("|%3.3s | %-12s | %3.3s |\n", i, name, age);
+	        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", i, name, age);
         }
 
-		System.out.println("+-------------------------+");
+		System.out.println(border);
 		System.out.println(numberofpets + " rows in set\n");
     }
     
