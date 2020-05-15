@@ -103,9 +103,9 @@ public class PetLibrary {
     // TODO,  one place I am breaking requirements...
     // AGE is NOT an INT, but a string.
     
-    // I found this stackoverflow post and laughed at this comment:
+    // I found and used this stackoverflow post and laughed at this comment:
     // https://stackoverflow.com/questions/18033287/arraylist-containing-integers-and-strings
-    //      "Dude this as per requirement stuff stinks of homework! – MightyPork Aug 3 '13 at 13:35"
+    //      "Dude this as per requirement stuff stinks of homework! - MightyPork Aug 3 '13 at 13:35"
     
     // That probably means an arraylist isn't the correct datatype I should use, 
     // but I'm not going to change it today.. ;)
@@ -130,6 +130,7 @@ public class PetLibrary {
 	        // chop up mynewpet to get name and age as separate values
 	        // split off of space char.
 	        // TODO,  add more validation logic to make user enter data in correct format.
+	        //  I found the split reference here: https://www.geeksforgeeks.org/split-string-java-examples/
 	        String[] arrayofpetdata = mynewpet.split(" ", 2);
 	                
 	        name=arrayofpetdata[0];
@@ -143,16 +144,15 @@ public class PetLibrary {
 	        try {
 		         age = arrayofpetdata[1];
 	        } catch (IndexOutOfBoundsException error) {
-	        	System.out.println("must enter  'name age' ");
-	        	System.out.println("come back here and try again\n\n");
+	        	System.out.println("     Must enter  'name age' ");
+	        	System.out.println("     Come back in here and try again\n\n");
 	        	break;       	
-	        } catch (Exception | Error exception) {
-	        	System.out.println("must enter  'name age' ");
-	        	System.out.println("come back here and try again\n\n");
-	        	break;
 	        }
   	
-    	    // add new value to arraylist
+	        // I referenced a number of places concerning Arraylist, but this was the last one that really got me going
+	        // https://www.javacodeexamples.com/java-arraylist-of-arrays-example/1003
+    	    
+	        // add new value to arraylist
 	    	mypets.add(new String[] {name, age});
 	    	petsadded++;
 	    	
