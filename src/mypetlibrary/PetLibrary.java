@@ -1,9 +1,8 @@
 package mypetlibrary;
 
 import java.io.Console;   
-import java.io.BufferedReader; 
-import java.io.IOException; 
-import java.io.InputStreamReader; 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -11,6 +10,14 @@ public class PetLibrary {
 	
 	PetLibrary() {
 	boolean exitnow = false;
+    
+    final ArrayList<String[]> pets = new ArrayList<String[]>();
+    
+    // TODO 
+    // Seeding the list, have to remember to remove before submitting
+	//pets.add(new String[] {"kitty", "8"});
+	//pets.add(new String[] {"bruno", "7"});
+
     
 	do {
 			
@@ -24,23 +31,22 @@ public class PetLibrary {
  			
 		switch (choice) {
 		  case "1":
-		    System.out.println("View");
-		    displayPets();
+		    displayPets(pets);
 		    break;
 		  case "2":
-		    System.out.println("add");
+		    addPets(pets);
 		    break;
 		  case "3":
-		    System.out.println("update");
+		    System.out.println("\nupdate\n");
 		    break;
 		  case "4":
-		    System.out.println("remove");
+		    System.out.println("\nremove\n");
 		    break;
 		  case "5":
-		    System.out.println("searchbyname");
+		    System.out.println("\nsearchbyname\n");
 		    break;
 		  case "6":
-		    System.out.println("searchbyage");
+		    System.out.println("\nsearchbyage\n");
 		    break;
 		  case "7":
 		    System.out.println("\nGoodbye!");
@@ -48,13 +54,12 @@ public class PetLibrary {
 		    break;
 		}
 	} while (!exitnow);
-	
-		
+			
 	}
 	
 	
     public final void displayMenu() {
-		System.out.println("What would you like to do?");
+		System.out.println("\nWhat would you like to do?");
 		System.out.println(" 1) View all pets");
 		System.out.println(" 2) Add more pets");
 		System.out.println(" 3) Update an existing pet");
@@ -65,16 +70,95 @@ public class PetLibrary {
 		System.out.println("Your choice: ");
     }
     
-    public final void displayPets() {
-    	int number = 0;
-		System.out.println("+-------------------------+");
-		System.out.println("| ID | NAME         | AGE |");
-		System.out.println("+-------------------------+");
-		System.out.println("all my pets");
-		System.out.println("+-------------------------+");
-		System.out.println(number + " rows in set\n");
-    }
+    // displayPets, allows users to display list of pets we are tracking
+    public final void displayPets(ArrayList<String[]> mypets) {
+    	String name = "";
+    	String age = "";
+    	String border="+------------------------+";
+    	
+    	
+    	// header
+		System.out.println("\n" + border);
+        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", "ID", "NAME", "AGE");
+		System.out.println(border);
+			
+			
+		// TODO 
+		// There has to be a better way to do this, but this is what I have so far,  
+		// can work on it in future releases.	
+		// rows
+		int numberofpets = mypets.size();
+        for( int i = 0; i < numberofpets; i++ ) {
+	        name=mypets.get(i)[0];
+	        age=mypets.get(i)[1];
+	        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", i, name, age);
+        }
 
+        // footer
+		System.out.println(border);
+		System.out.println(numberofpets + " rows in set\n");
+    }
+    
+    
+    // TODO,  one place I am breaking requirements...
+    // AGE is NOT an INT, but a string.
+    
+    // I found and used this stackoverflow post and laughed at this comment:
+    // https://stackoverflow.com/questions/18033287/arraylist-containing-integers-and-strings
+    //      "Dude this as per requirement stuff stinks of homework! - MightyPork Aug 3 '13 at 13:35"
+    
+    // That probably means an arraylist isn't the correct datatype I should use, 
+    // but I'm not going to change it today.. ;)
+    
+    // addPets, allows user to add pet name and age to arraylist
+    public final void addPets(ArrayList<String[]> mypets) {
+    	
+    	// TODO, Have to work on formatting,  I have newlines in diff places to make it pretty.
+    	System.out.println("\n\n");
+    	
+    	String name="";
+    	String age="";
+    	int petsadded=0;
+    	
+    	do { 
+	    	System.out.println("add pet (name age):");
+	        Scanner scanner = new Scanner(System.in); 
+	        
+	        // get new pet from user 
+	        String mynewpet = scanner.nextLine();
+	        
+	        // chop up mynewpet to get name and age as separate values
+	        // split off of space char.
+	        // TODO,  add more validation logic to make user enter data in correct format.
+	        //  I found the split reference here: https://www.geeksforgeeks.org/split-string-java-examples/
+	        String[] arrayofpetdata = mynewpet.split(" ", 2);
+	                
+	        name=arrayofpetdata[0];
+	        
+	        // 'done' is keyword to stop entering pets
+	        if (name.equals("done")) {
+	        	break;
+	        }
+
+	        // need better validation logic, this just keeps it from puking
+	        try {
+		         age = arrayofpetdata[1];
+	        } catch (IndexOutOfBoundsException error) {
+	        	System.out.println("     Must enter  'name age' ");
+	        	System.out.println("     Come back in here and try again\n\n");
+	        	break;       	
+	        }
+  	
+	        // I referenced a number of places concerning Arraylist, but this was the last one that really got me going
+	        // https://www.javacodeexamples.com/java-arraylist-of-arrays-example/1003
+    	    
+	        // add new value to arraylist
+	    	mypets.add(new String[] {name, age});
+	    	petsadded++;
+	    	
+    	} while (true);
+    	System.out.println(petsadded + " pets added.\n");
+    }
 }
 
 
