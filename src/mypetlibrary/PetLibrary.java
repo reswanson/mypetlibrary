@@ -60,7 +60,7 @@ public class PetLibrary {
 	
 	
     public final void displayMenu() {
-		System.out.println("What would you like to do?");
+		System.out.println("\nWhat would you like to do?");
 		System.out.println(" 1) View all pets");
 		System.out.println(" 2) Add more pets");
 		System.out.println(" 3) Update an existing pet");
@@ -102,6 +102,9 @@ public class PetLibrary {
     	
     	System.out.println("\n\n");
     	
+    	String name="";
+    	String age="";
+    	
     	do { 
 	    	System.out.println("add pet (name age):");
 	        Scanner sc = new Scanner(System.in); 
@@ -114,15 +117,29 @@ public class PetLibrary {
 	        // TODO,  add validation logic to make user enter data in correct format.
 	        String[] arrayofpetdata = mynewpet.split(" ", 2);
 	                
-	        final String name=arrayofpetdata[0];
+	        name=arrayofpetdata[0];
 	        
 	        // 'done' is keyword to stop entering pets
 	        if (name.equals("done")) {
 	        	break;
 	        }
 
-	        final String age=arrayofpetdata[1];
+	        // need better validation logic, this just eeps it from puking
+	        try {
+		         age = arrayofpetdata[1];
+	        } catch (IndexOutOfBoundsException error) {
+	        	System.out.println("must enter  'name age' ");
+	        	System.out.println("come back here and try again\n\n");
+	        	break;       	
+	        } catch (Exception | Error exception) {
+	        	System.out.println("must enter  'name age' ");
+	        	System.out.println("come back here and try again\n\n");
+	        	break;
+	        }
+  	
+    	    // add new value to arraylist
 	    	mypets.add(new String[] {name, age});
+	    	
     	} while (true);
        
     }
