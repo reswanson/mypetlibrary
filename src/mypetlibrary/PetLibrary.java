@@ -1,6 +1,7 @@
 package mypetlibrary;
 
-import java.io.Console;   
+import java.io.Console; 
+  
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,10 +14,9 @@ public class PetLibrary {
     
     final ArrayList<String[]> pets = new ArrayList<String[]>();
     
-    // TODO 
-    // Seeding the list, have to remember to remove before submitting
-	//pets.add(new String[] {"kitty", "8"});
-	//pets.add(new String[] {"bruno", "7"});
+    // Seeding the list for testing purposes
+	// pets.add(new String[] {"fido", "8"});
+	// pets.add(new String[] {"bruno", "7"});
 
     
 	do {
@@ -44,9 +44,10 @@ public class PetLibrary {
 		    break;
 		  case "5":
 		    System.out.println("\nsearchbyname\n");
+			searchPetsByName(pets);
 		    break;
 		  case "6":
-		    System.out.println("\nsearchbyage\n");
+			searchPetsByAge(pets);
 		    break;
 		  case "7":
 		    System.out.println("\nGoodbye!");
@@ -77,12 +78,8 @@ public class PetLibrary {
     	String border="+------------------------+";
     	
     	
-    	// header
-		System.out.println("\n" + border);
-        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", "ID", "NAME", "AGE");
-		System.out.println(border);
-			
-			
+    	displayHeader();
+						
 		// TODO 
 		// There has to be a better way to do this, but this is what I have so far,  
 		// can work on it in future releases.	
@@ -91,12 +88,10 @@ public class PetLibrary {
         for( int i = 0; i < numberofpets; i++ ) {
 	        name=mypets.get(i)[0];
 	        age=mypets.get(i)[1];
-	        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", i, name, age);
+	        displayPet(i,name,age);
         }
 
-        // footer
-		System.out.println(border);
-		System.out.println(numberofpets + " rows in set\n");
+        displayFooter(numberofpets);
     }
     
     
@@ -125,8 +120,7 @@ public class PetLibrary {
 	        Scanner scanner = new Scanner(System.in); 
 	        
 	        // get new pet from user 
-	        String mynewpet = scanner.nextLine();
-	        
+	        String mynewpet = scanner.nextLine(); 
 	        // chop up mynewpet to get name and age as separate values
 	        // split off of space char.
 	        // TODO,  add more validation logic to make user enter data in correct format.
@@ -159,6 +153,89 @@ public class PetLibrary {
     	} while (true);
     	System.out.println(petsadded + " pets added.\n");
     }
+    
+    // searchPetsByName, allows user to search for pets matching name
+    public final void searchPetsByName(ArrayList<String[]> mypets) {
+    	
+    	String name;
+    	String age;
+    	
+   	    int matchedpets = 0;
+		int numberofpets = mypets.size();   	    	
+    	
+    	System.out.println("Enter a name to search:");
+        Scanner scanner = new Scanner(System.in); 
+        // get name to search for from user 
+        String searchforname = scanner.nextLine(); 
+
+	  	displayHeader();
+
+        for( int i = 0; i < numberofpets; i++ ) {
+	        name=mypets.get(i)[0];
+	        age=mypets.get(i)[1];        
+
+            if(name.equalsIgnoreCase(searchforname)) {
+            	matchedpets++;        	
+    	        displayPet(i,name,age);
+	        }
+        }
+    	displayFooter(matchedpets);
+    }
+    
+    // searchPetsByAge, allows user to search for pets matching name
+    public final void searchPetsByAge(ArrayList<String[]> mypets) {
+    	
+    	String name;
+    	String age;
+    	
+   	    int matchedpets = 0;
+		int numberofpets = mypets.size();   	    	
+    	
+    	System.out.println("Enter age to search:");
+        Scanner scanner = new Scanner(System.in); 
+        // get age of pet to search for from user 
+        String searchforage = scanner.nextLine(); 
+
+	  	displayHeader();
+
+        for( int i = 0; i < numberofpets; i++ ) {
+	        name=mypets.get(i)[0];
+	        age=mypets.get(i)[1];        
+
+            if(age.equals(searchforage)) {
+            	matchedpets++;        	
+    	        displayPet(i,name,age);
+	        }
+        }
+    	displayFooter(matchedpets);
+    }
+
+    
+    public final void displayPet(int id, String name, String age) {	   	
+        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", id, name, age);
+    }
+
+    
+    public final void displayHeader() {	
+    	
+    	String border="+------------------------+";
+    	
+		System.out.println("\n" + border);
+        System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", "ID", "NAME", "AGE");
+		System.out.println(border);
+    }
+    
+    public final void displayFooter(int rows) {	
+    	
+    	String border="+------------------------+";
+    	
+		System.out.println(border);
+		System.out.println(rows + " rows in set\n");
+
+    }
+
+
+
 }
 
 
