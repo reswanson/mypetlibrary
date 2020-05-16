@@ -5,13 +5,13 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.Arrays;
 
 public class PetLibrary {
 	
 	PetLibrary() {
 	boolean exitnow = false;
-    
+	 
     final ArrayList<String[]> pets = new ArrayList<String[]>();
     
     // Seeding the list for testing purposes
@@ -37,13 +37,12 @@ public class PetLibrary {
 		    addPets(pets);
 		    break;
 		  case "3":
-		    System.out.println("\nupdate\n");
+		    updatePetById(pets);
 		    break;
 		  case "4":
-		    System.out.println("\nremove\n");
+			removePetById(pets);
 		    break;
 		  case "5":
-		    System.out.println("\nsearchbyname\n");
 			searchPetsByName(pets);
 		    break;
 		  case "6":
@@ -154,7 +153,7 @@ public class PetLibrary {
     	System.out.println(petsadded + " pets added.\n");
     }
     
-    // searchPetsByName, allows user to search for pets matching name
+    // searchPetsByName, allows user to search for pets matching entered name
     public final void searchPetsByName(ArrayList<String[]> mypets) {
     	
     	String name;
@@ -182,7 +181,7 @@ public class PetLibrary {
     	displayFooter(matchedpets);
     }
     
-    // searchPetsByAge, allows user to search for pets matching name
+    // searchPetsByAge, allows user to search for pets matching entered age
     public final void searchPetsByAge(ArrayList<String[]> mypets) {
     	
     	String name;
@@ -209,13 +208,69 @@ public class PetLibrary {
         }
     	displayFooter(matchedpets);
     }
+    
+    // updatePetById - allow user to update an existing pet
+    public final void updatePetById(ArrayList<String[]> mypets) {
+    
+    	displayPets(mypets);
+    	System.out.println("Enter ID of pet you want to update:");
+        Scanner scanner = new Scanner(System.in); 
+        // get id of pet to update from user 
+        String idtoupdate = scanner.nextLine(); 
+        
+        
+    	System.out.println("Enter new name and new age:");
+        // get updated pet info from user 
+        String updatedpet = scanner.nextLine(); 
+        // chop up updatedpet to get name and age as separate values
+        // split off of space char.
+        // TODO,  add more validation logic to make user enter data in correct format.
+        //  I found the split reference here: https://www.geeksforgeeks.org/split-string-java-examples/
+        String[] arrayofupdateddata = updatedpet.split(" ", 2);
+                
+        // TODO - error checking.
+        String newname=arrayofupdateddata[0];
+        String newage=arrayofupdateddata[1];
+    	
+        int id = Integer.parseInt(idtoupdate);
+        
+        // save pet that is to be updated
+    	String[] pet = mypets.get(id);
 
+        // update values at location id
+    	mypets.set(id, new String[] {newname, newage});
+    	
+    	
+    	System.out.println(Arrays.toString(pet) + " changed to " + updatedpet);
+
+    	//System.out.println(pet + " changed to " + updatedpet);
+    }
+    
+    // removePetById - allow user to remove a pet
+    public final void removePetById(ArrayList<String[]> mypets) {
+        
+    	displayPets(mypets);
+    	System.out.println("Enter ID of pet you want to remove:");
+        Scanner scanner = new Scanner(System.in); 
+        // get id of pet to update from user 
+        String idtoremove = scanner.nextLine();     	
+        int id = Integer.parseInt(idtoremove);
+        
+        // save pet to be removed
+    	String[] pet = mypets.get(id);
+
+        // remove entry at location id
+    	mypets.remove(id);
+    	
+    	System.out.println(Arrays.toString(pet) + " is removed");
+
+    }
+    
     
     public final void displayPet(int id, String name, String age) {	   	
         System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", id, name, age);
     }
-
-    
+   
     public final void displayHeader() {	
     	
     	String border="+------------------------+";
@@ -231,7 +286,6 @@ public class PetLibrary {
     	
 		System.out.println(border);
 		System.out.println(rows + " rows in set\n");
-
     }
 
 
