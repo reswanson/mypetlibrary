@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -58,6 +60,7 @@ public class PetLibrary {
 		    break;
 		  case "7":
 		    System.out.println("\nGoodbye!");
+		    persistPetData(pets, datafile);
 		    exitnow=true;
 		    break;
 		}
@@ -295,6 +298,32 @@ public class PetLibrary {
             System.exit(1);
         } // I read that if you use a try you dont have to close the handle.
     }
+    
+    // read pets from flatfile and load into our array
+    public final void persistPetData(ArrayList<String[]> mypets, String flatfile)  {	
+
+    	
+    	System.out.println("Saving pet data back to file on exit: " + flatfile);
+    	// I found this which discussed many ways to write a file and I im trying different ones: https://www.baeldung.com/java-write-to-file    	
+    	
+    	try {
+    		FileWriter fileWriter = new FileWriter(flatfile);
+    		PrintWriter printWriter = new PrintWriter(fileWriter);
+    	   	
+    		int numberofpets = mypets.size();
+    		for( int i = 0; i < numberofpets; i++ ) {
+    			String name=mypets.get(i)[0];
+    			String age=mypets.get(i)[1];
+    			printWriter.printf("%s %s\n", name, age);
+    			displayPet(i,name,age);
+    		}
+    	   	printWriter.close();
+    	} catch (IOException ex) {
+    		System.out.println("ioexception: " +  ex);
+    	}
+  
+    }
+
 
     
     
