@@ -277,7 +277,9 @@ public class PetLibrary {
     // read pets from flatfile and load into our array
     public final void loadPetsFromFile(ArrayList<String[]> mypets, String flatfile)  {	
 
+    	
     	System.out.println("Preloading pets from file: " + flatfile);
+    	// I got some details for the scanner logic here: https://www.baeldung.com/java-file-to-arraylist
         try ( Scanner s = new Scanner(new FileReader(flatfile))) {   	 
 
             while (s.hasNext()) {
