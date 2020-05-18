@@ -6,11 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
 
 public class PetLibrary {
 	
 	PetLibrary() {
 	boolean exitnow = false;
+	String datafile="./src/mypetlibrary/mypetdata.txt";
 	 
     final ArrayList<String[]> pets = new ArrayList<String[]>();
     
@@ -18,6 +23,9 @@ public class PetLibrary {
 	// pets.add(new String[] {"fido", "8"});
 	// pets.add(new String[] {"bruno", "7"});
 
+    // load pets into array from a file.
+    loadPetsFromFile(pets, datafile);
+    
     
 	do {
 			
@@ -265,6 +273,29 @@ public class PetLibrary {
     	System.out.println(Arrays.toString(pet) + " is removed");
 
     }
+    
+    // read pets from flatfile and load into our array
+    public final void loadPetsFromFile(ArrayList<String[]> mypets, String flatfile)  {	
+
+    	
+    	System.out.println("Preloading pets from file: " + flatfile);
+    	// I got some details for the scanner logic here: https://www.baeldung.com/java-file-to-arraylist
+        try ( Scanner s = new Scanner(new FileReader(flatfile))) {   	 
+
+            while (s.hasNext()) {
+            	String lineofdata = s.nextLine();
+                System.out.println("Pre-loading pet: " + lineofdata);
+    	        String[] arrayofpetdata = lineofdata.split(" ", 2);
+    	        String name=arrayofpetdata[0];
+    	        String age=arrayofpetdata[1];               
+    	    	mypets.add(new String[] {name, age});
+            }
+        } catch (FileNotFoundException ex ) {
+            System.out.println("Filenotfound: " + ex);
+            System.exit(1);
+        } // I read that if you use a try you dont have to close the handle.
+    }
+
     
     
     public final void displayPet(int id, String name, String age) {	   	
