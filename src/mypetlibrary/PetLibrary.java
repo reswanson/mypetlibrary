@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -58,6 +60,7 @@ public class PetLibrary {
 		    break;
 		  case "7":
 		    System.out.println("\nGoodbye!");
+		    persistPetData(pets, datafile);
 		    exitnow=true;
 		    break;
 		}
@@ -66,6 +69,9 @@ public class PetLibrary {
 	}
 	
 	
+	// 
+	//
+	//
     public final void displayMenu() {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println(" 1) View all pets");
@@ -78,6 +84,9 @@ public class PetLibrary {
 		System.out.println("Your choice: ");
     }
     
+    //
+    //
+    //
     // displayPets, allows users to display list of pets we are tracking
     public final void displayPets(ArrayList<String[]> mypets) {
     	String name = "";
@@ -112,6 +121,9 @@ public class PetLibrary {
     // That probably means an arraylist isn't the correct datatype I should use, 
     // but I'm not going to change it today.. ;)
     
+    //
+    //
+    //
     // addPets, allows user to add pet name and age to arraylist
     public final void addPets(ArrayList<String[]> mypets) {
     	
@@ -161,6 +173,9 @@ public class PetLibrary {
     	System.out.println(petsadded + " pets added.\n");
     }
     
+    //
+    //
+    //
     // searchPetsByName, allows user to search for pets matching entered name
     public final void searchPetsByName(ArrayList<String[]> mypets) {
     	
@@ -189,6 +204,9 @@ public class PetLibrary {
     	displayFooter(matchedpets);
     }
     
+    //
+    //
+    //
     // searchPetsByAge, allows user to search for pets matching entered age
     public final void searchPetsByAge(ArrayList<String[]> mypets) {
     	
@@ -217,6 +235,10 @@ public class PetLibrary {
     	displayFooter(matchedpets);
     }
     
+    
+    //
+    //
+    // 
     // updatePetById - allow user to update an existing pet
     public final void updatePetById(ArrayList<String[]> mypets) {
     
@@ -254,6 +276,9 @@ public class PetLibrary {
     	//System.out.println(pet + " changed to " + updatedpet);
     }
     
+    //
+    //
+    //
     // removePetById - allow user to remove a pet
     public final void removePetById(ArrayList<String[]> mypets) {
         
@@ -274,6 +299,9 @@ public class PetLibrary {
 
     }
     
+    //
+    //
+    //
     // read pets from flatfile and load into our array
     public final void loadPetsFromFile(ArrayList<String[]> mypets, String flatfile)  {	
 
@@ -295,6 +323,36 @@ public class PetLibrary {
             System.exit(1);
         } // I read that if you use a try you dont have to close the handle.
     }
+    
+    
+    //
+    //
+    //
+    // read pets from flatfile and load into our array
+    public final void persistPetData(ArrayList<String[]> mypets, String flatfile)  {	
+
+    	
+    	System.out.println("Saving pet data back to file on exit: " + flatfile);
+    	// I found this which discussed many ways to write a file and Im trying different ones: https://www.baeldung.com/java-write-to-file
+    	// landed on filewriter
+    	
+    	try {
+    		FileWriter fileWriter = new FileWriter(flatfile);
+    		PrintWriter printWriter = new PrintWriter(fileWriter);
+    	   	
+    		int numberofpets = mypets.size();
+    		for( int i = 0; i < numberofpets; i++ ) {
+    			String name=mypets.get(i)[0];
+    			String age=mypets.get(i)[1];
+    			printWriter.printf("%s %s\n", name, age);
+    			displayPet(i,name,age);
+    		}
+    	   	printWriter.close();
+    	} catch (IOException ex) {
+    		System.out.println("ioexception: " +  ex);
+    	}
+    }
+
 
     
     
