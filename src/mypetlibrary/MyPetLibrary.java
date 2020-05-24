@@ -37,8 +37,7 @@ public class MyPetLibrary {
 	 	     
 	 	        // String input 
 	 	        String choice = sc.nextLine(); 
-	 			
-	 	 			
+	 				 			
 	 			switch (choice) {
 	 			  case "1":
 	 			    displayPets(petlist);
@@ -52,14 +51,14 @@ public class MyPetLibrary {
 	 			  case "4":
 	 				removePetById(petlist);
 	 			    break;
-	 			//case "5":
-		 		//	System.out.println("searchbyname");
+	 			  case "5":
+		 			System.out.println("searchbyname");
 	 				//searchPetsByName(petlist);
-	 			//    break;
-	 			//  case "6":
-		 		//	System.out.println("searchpetsbyage");
-	 				//searchPetsByAge(petlist);
-	 			//    break;
+	 			    break;
+	 			  case "6":
+		 			System.out.println("searchpetsbyage");
+	 			    //searchPetsByAge(petlist);
+	 			    break;
 	 			  case "7":
 	 			    System.out.println("\nGoodbye!");
 	 			    persistPetData(petlist, datafile);
@@ -75,7 +74,7 @@ public class MyPetLibrary {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println(" 1) View all pets");
 		System.out.println(" 2) Add more pets");
-		System.out.println(" 3) Update an existing pet ( I didnt add error checking but did do this to prove I could with Arraylist of PetLibrary)");
+		System.out.println(" 3) Update an existing pet ( I didn't add error checking to update, but did do this to prove I could with Arraylist of PetLibrary)");
 		System.out.println(" 4) Remove an existing pet");
 		//System.out.println(" 5) Search pets by name");
 		//System.out.println(" 6) Search pets by age");
@@ -85,7 +84,7 @@ public class MyPetLibrary {
 	
 	
 	
-    // displayPets, allows users to display list of pets we are tracking
+    // displayPets, display list of pets we are tracking
     public static void displayPets(ArrayList<PetLibrary> mypets) {
     	String name = "";
     	String age = "";
@@ -95,9 +94,7 @@ public class MyPetLibrary {
     	displayHeader();
 						
 		// TODO 
-		// There has to be a better way to do this, but this is what I have so far,  
-		// can work on it in future releases.	
-		// rows
+		// There has to be a better way to do this, but this is what I have so far
 		int numberofpets = mypets.size();
    		//System.out.println("numpets :" + numberofpets);
 
@@ -160,7 +157,6 @@ public class MyPetLibrary {
 	        try {
 	        	age = arrayofpetdata[1];
         	
-	        	
 	        	// This catches if age isnt a valid int.
 	        	try {
 	        		intage = Integer.parseInt(age);
@@ -193,6 +189,9 @@ public class MyPetLibrary {
 	        // https://www.javacodeexamples.com/java-arraylist-of-arrays-example/1003
     	    
 	        // add new value to arraylist
+	        
+	        // This add should be in an above trycatch to provide better flow, so if happy path, add it, else it ends up in the 
+	        // error logic.
 	 	   	mypets.add(new PetLibrary(name,intage));
 	    	petsadded++;
 	    	
@@ -256,9 +255,8 @@ public class MyPetLibrary {
             return;
         }
                
-        
         try {
-        	// save pet to be removed
+        	// save pet to be removed so we can display it.
         	PetLibrary pet = mypets.get(id);
             // remove entry at location id
         	mypets.remove(id);
@@ -278,6 +276,7 @@ public class MyPetLibrary {
         try ( Scanner s = new Scanner(new FileReader(flatfile))) {
 
         	int numofpets=0;
+        	System.out.println("----------loading----------");
             while (s.hasNext()) {
             	if (numofpets >= 5) {
             	  System.out.println("Pet Db can only have 5 entries, skipping the rest from the flatfile");
@@ -290,9 +289,9 @@ public class MyPetLibrary {
                 String age=arrayofpetdata[1];
         		int intage = Integer.parseInt(age);
     	 	   	mypets.add(new PetLibrary(name,intage));
-                //mypets.add(new String[] {name, age});
     	 	   	numofpets++;
             }
+        	System.out.println("----------loading----------\n");
         } catch (FileNotFoundException ex ) {
             System.out.println("Filenotfound: " + ex);
             System.exit(1);
@@ -314,11 +313,13 @@ public class MyPetLibrary {
                 int numberofpets = mypets.size();
                 
       		   int i=0; 
+           	   System.out.println("----------saving----------");
          	   for(PetLibrary pet: mypets){
                    printWriter.printf("%s %d\n", pet.name, pet.age);
                    displayPet(i,pet.name,pet.age);
                    i++;                  
        	       }
+           	   System.out.println("----------saving----------\n");
                printWriter.close();
         } catch (IOException ex) {
                 System.out.println("ioexception: " +  ex);

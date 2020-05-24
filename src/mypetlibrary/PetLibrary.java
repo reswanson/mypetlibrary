@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 
+// Got this from here: https://beginnersbook.com/2013/12/java-arraylist-of-object-sort-example-comparable-and-comparator/
+// There were getters and setters, but dont know what to do with them, (and I read in a few places that you dont need getters and setters,
+//  So I need to learn more..
+
 public class PetLibrary {
 	
 	String name;
@@ -23,17 +27,4 @@ public class PetLibrary {
 		this.name = name;
 		this.age = age;
 	}
-	
-    public String getPetname() {
-        return name;
-    }
-    public void setPetname(String name) {
-    	this.name = name;
-    } 
-    public int getPetage() {
-    	return age;
-    }
-    public void setPetage(int age) {
-    	this.age = age;
-    }	
 }
