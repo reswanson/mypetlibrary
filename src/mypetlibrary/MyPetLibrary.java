@@ -262,7 +262,7 @@ public class MyPetLibrary {
         	PetLibrary pet = mypets.get(id);
             // remove entry at location id
         	mypets.remove(id);
-        	System.out.println(pet.name + " has been removed");
+        	System.out.println(pet.name + " " + pet.age + " has been removed");
         } catch (IndexOutOfBoundsException error) {
         	System.out.println("ID (" + id + ") does not exist\n");
             return;		
