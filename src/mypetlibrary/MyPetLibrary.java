@@ -1,11 +1,11 @@
 package mypetlibrary;
 
 import java.util.*;
+import java.io.*;
 
 
 public class MyPetLibrary {
 	
-
 	
 	// I referenced this to get start of making an Arraylist of Objects:
 	// https://beginnersbook.com/2013/12/java-arraylist-of-object-sort-example-comparable-and-comparator/
@@ -14,19 +14,24 @@ public class MyPetLibrary {
 	public static void main(String[] args) {
 		
 		boolean exitnow = false;
+		String datafile="./src/mypetlibrary/mypetdata.txt";
 
 	    	
-	    	System.out.println("Pet Database Program.\n");
-	    	ArrayList<PetLibrary> petlist = new ArrayList<PetLibrary>();
+	    System.out.println("Pet Database Program.\n");
+	    ArrayList<PetLibrary> petlist = new ArrayList<PetLibrary>();
 	    	
-	    	// Use these to seed the list to make testing faster
-	 	   	petlist.add(new PetLibrary("boomer", 2));
-	 	   	petlist.add(new PetLibrary("fifi", 2));
-	 	   	petlist.add(new PetLibrary("bubba", 5));
+	    // Use these to seed the list to make testing faster
+	 	//petlist.add(new PetLibrary("boomer", 2));
+	 	//petlist.add(new PetLibrary("fifi", 2));
+	 	//petlist.add(new PetLibrary("bubba", 5));
 	 	   	
-	 	   do {
-				
-	 			displayMenu();
+
+	 	// load pets into array from a file.
+	 	loadPetsFromFile(petlist, datafile);
+
+	 	    do {
+			
+	 	    	displayMenu();
 	 			
 	 	        Scanner sc = new Scanner(System.in); 
 	 	     
@@ -57,18 +62,11 @@ public class MyPetLibrary {
 	 			//    break;
 	 			  case "7":
 	 			    System.out.println("\nGoodbye!");
-	 			    //(pets, datafile);
+	 			    persistPetData(petlist, datafile);
 	 			    exitnow=true;
 	 			    break;
 	 			}
-	 		} while (!exitnow);
-	 				
-     
-	 	   	//for(PetLibrary str: petlist){
-	 	   		//System.out.println(java.util.Arrays.toString(str));
-	 	   		//System.out.println(Arrays.deepToString(str));
-	 	    //		System.out.println("Name: " + str.name + " Age: " + str.age);
-	 	   	//}   
+	 		} while (!exitnow);	 				    
 	}
 	
 	
@@ -77,7 +75,7 @@ public class MyPetLibrary {
 		System.out.println("\nWhat would you like to do?");
 		System.out.println(" 1) View all pets");
 		System.out.println(" 2) Add more pets");
-		System.out.println(" 3) Update an existing pet (doesn't enforce error checking that add does)");
+		System.out.println(" 3) Update an existing pet ( I didnt add error checking but did do this to prove I could with Arraylist of PetLibrary)");
 		System.out.println(" 4) Remove an existing pet");
 		//System.out.println(" 5) Search pets by name");
 		//System.out.println(" 6) Search pets by age");
@@ -269,10 +267,64 @@ public class MyPetLibrary {
         	System.out.println("ID (" + id + ") does not exist\n");
             return;		
         }
+    }   
+    
+    // read pets from flatfile and load into our array
+    public static void loadPetsFromFile(ArrayList<PetLibrary> mypets, String flatfile)  {
 
-    	
 
-    }    
+        System.out.println("Preloading pets from file: " + flatfile);
+        // I got some details for the scanner logic here: https://www.baeldung.com/java-file-to-arraylist
+        try ( Scanner s = new Scanner(new FileReader(flatfile))) {
+
+        	int numofpets=0;
+            while (s.hasNext()) {
+            	if (numofpets >= 5) {
+            	  System.out.println("Pet Db can only have 5 entries, skipping the rest from the flatfile");
+            	  break;
+            	}
+                String lineofdata = s.nextLine();
+                System.out.println("Pre-loading pet: " + lineofdata);
+                String[] arrayofpetdata = lineofdata.split(" ", 2);
+                String name=arrayofpetdata[0];
+                String age=arrayofpetdata[1];
+        		int intage = Integer.parseInt(age);
+    	 	   	mypets.add(new PetLibrary(name,intage));
+                //mypets.add(new String[] {name, age});
+    	 	   	numofpets++;
+            }
+        } catch (FileNotFoundException ex ) {
+            System.out.println("Filenotfound: " + ex);
+            System.exit(1);
+        } // I read that if you use a try you dont have to close the handle.
+    }
+
+    // load pets back to flatfile
+    public static void persistPetData(ArrayList<PetLibrary> mypets, String flatfile)  {
+
+
+        System.out.println("Saving pet data back to file on exit: " + flatfile);
+        // I found this which discussed many ways to write a file and Im trying different ones: https://www.baeldung.com/java-write-to-file
+        // landed on filewriter
+
+        try {
+                FileWriter fileWriter = new FileWriter(flatfile);
+                PrintWriter printWriter = new PrintWriter(fileWriter);
+
+                int numberofpets = mypets.size();
+                
+      		   int i=0; 
+         	   for(PetLibrary pet: mypets){
+                   printWriter.printf("%s %d\n", pet.name, pet.age);
+                   displayPet(i,pet.name,pet.age);
+                   i++;                  
+       	       }
+               printWriter.close();
+        } catch (IOException ex) {
+                System.out.println("ioexception: " +  ex);
+        }
+    }
+
 
     public static void displayPet(int id, String name, int age) {	   	
         System.out.printf("|%3.3s | %-10.10s | %4.4s |\n", id, name, age);
